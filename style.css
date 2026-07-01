@@ -1954,3 +1954,38 @@ header p{
   background: #e6f7ff;
   transform: scale(1.05);
 }
+
+@media (max-width: 900px) {
+
+  body {
+    overflow-x: auto;
+  }
+
+  .principal {
+    display: block;
+  }
+
+  .panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .panel div {
+    padding: 6px;
+    min-height: auto;
+  }
+
+  .hotelVisual {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .inventario,
+  .catalogo,
+  .controles {
+    max-height: none;
+  }
+
+}
