@@ -1989,3 +1989,89 @@ header p{
   }
 
 }
+
+/* =========================
+   MODO CELULAR
+========================= */
+
+@media (max-width: 900px) {
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 8px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 20px;
+    margin: 4px 0;
+  }
+
+  .panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .panel div {
+    padding: 6px;
+    min-height: auto;
+  }
+
+  .layout,
+  .principal,
+  .contenedorPrincipal {
+    display: block;
+    width: 100%;
+  }
+
+  #hotel,
+  .hotelVisual,
+  .zonaHotel {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  #inventario,
+  .inventario {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 999;
+    border-top: 2px solid #ccc;
+  }
+
+  .itemInventario {
+    min-width: 70px;
+    max-width: 70px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  #catalogo,
+  .catalogo {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .itemCatalogo {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .cuarto {
+    min-width: 65px;
+    min-height: 70px;
+  }
+
+}
