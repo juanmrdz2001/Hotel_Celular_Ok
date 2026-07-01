@@ -1,0 +1,1956 @@
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:linear-gradient(to bottom,#8ed6ff,#f4f4f4);
+}
+
+.contenedor{
+  width:96%;
+  max-width:2400px;
+  margin:auto;
+  padding:20px;
+}
+
+header{
+  background:white;
+  border-radius:18px;
+  padding:10px;
+  text-align:center;
+  margin-bottom:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+header h1{
+  margin:0;
+  font-size:40px;
+}
+
+.tituloJuego{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:3px;
+    margin-bottom:2px;
+}
+
+.imgTitulo{
+    width:260px;
+    height:auto;
+}
+
+.panel{
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.panel div{
+  background:white;
+  padding:12px 8px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+  white-space:nowrap;
+  font-size:14px;
+}
+
+.principal{
+  display:grid;
+  grid-template-columns:260px minmax(600px, 1fr) 280px;
+  gap:10px;
+  align-items:start;
+}
+
+.controles,
+.catalogoBox,
+.inventarioBox,
+.detalleBox,
+.mensajesBox{
+  background:white;
+  border-radius:18px;
+  padding:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  margin-bottom:20px;
+}
+
+.inventarioLateral{
+  position:sticky;
+  top:10px;
+}
+
+.ladoHotel{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:4px;
+  align-content:end;
+}
+
+.centroHotel{
+  position:relative;
+  width:120px;
+  height:calc(100% + 90px);
+  margin-bottom:-90px;
+  background:#c9a77d;
+  border-left:6px solid #5d3519;
+  border-right:6px solid #5d3519;
+  z-index:1;
+  overflow:hidden;
+}
+
+.centroHotel::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 108px,
+      rgba(0,0,0,0.18) 110px,
+      transparent 112px
+    );
+}
+
+.letreroElevador{
+  position:absolute;
+  left:50%;
+  bottom:185px;
+  transform:translateX(-50%);
+  background:#333;
+  color:white;
+  padding:6px;
+  border-radius:6px;
+  font-weight:bold;
+  z-index:5;
+}
+
+.elevador{
+  width:80px;
+  height:110px;
+  background:#b0bec5;
+  border:4px solid #546e7a;
+  border-radius:8px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:45px;
+  position:absolute;
+  left:50%;
+  bottom:1px;
+  transform:translateX(-50%);
+  animation:moverElevador 12s ease-in-out infinite;
+  z-index:4;
+}
+
+.cuarto{
+  height:115px;
+  background:#f6e3bd;
+  border:3px solid #573414;
+  border-radius:12px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.cuarto:hover{
+  outline:4px solid #2196f3;
+}
+
+.cuarto.bloqueado{
+  background:#444;
+  opacity:0.75;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:34px;
+}
+
+.cuarto.comprado{
+  background:
+  linear-gradient(
+    to bottom,
+    #fff7d6 0%,
+    #f6e6b0 70%,
+    #f0ece8 80%,
+    #f1a765 100%
+  );
+}
+
+.cuarto.ocupado{
+  background:
+  linear-gradient(
+    to bottom,
+    #fff7d6 0%,
+    #f6e6b0 70%,
+    #d9a066 70%,
+    #b9783f 100%
+  );
+}
+
+
+.numeroCuarto{
+  position:absolute;
+  top:3px;
+  left:5px;
+  font-size:13px;
+  background:#3e2723;
+  color:white;
+  padding:2px 5px;
+  border-radius:5px;
+}
+
+.objetoCuarto{
+  position:absolute;
+  font-size:20px;
+}
+
+
+.objeto-cama{
+  position:absolute;
+  left:3px;
+  bottom:18px;
+  width:50px;
+  height:40px;
+  object-fit:contain;
+  background:transparent;
+  mix-blend-mode:multiply;
+  z-index: 10;
+}
+
+.objeto-tv{
+  right:6px;
+  top:24px;
+}
+
+.objeto-lampara{
+  position:absolute;
+  top:4px;
+  left:50%;
+  transform:
+    translateX(-50%)
+    rotate(180deg);
+  font-size:18px;
+}
+
+.objeto-alfombra{
+  position:absolute;
+  left:6px;
+  right:6px;
+  bottom:4px;
+  height:8px;
+  border-radius:6px;
+  background:#c62828;
+  font-size:0;
+}
+
+.objeto-sabanas{
+  position:absolute;
+  left:54px;
+  bottom:27px;
+  font-size:16px;
+  z-index:3;
+}
+
+.objeto-extintor{
+  position:absolute;
+  right:0px;
+  bottom: 40px;
+  font-size:16px;
+}
+
+.objeto-internet{
+  position:absolute;
+  top:85px;
+  right:2px;
+  transform:translateX(-50%);
+  font-size:14px;
+}
+
+.objeto-clima{
+  position:absolute;
+  right:32px;
+  top:4px;
+  width:18px;
+  height:18px;
+  object-fit:contain;
+  z-index:20;
+}
+
+.objeto-cuadro{
+  position:absolute;
+  top:26px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:16px;
+} 
+
+.estadoCuarto{
+  position:absolute;
+  right:5px;
+  top:3px;
+  font-size:15px;
+}
+
+.precioCuarto{
+  position:absolute;
+  left:5px;
+  bottom:3px;
+  font-size:12px;
+  background:#2e7d32;
+  color:white;
+  padding:2px 4px;
+  border-radius:5px;
+}
+
+.hotelVisual{
+  position:relative;
+  min-height:900px;
+  background:#deb887;
+  border:8px solid #6d421f;
+  border-radius:12px;
+  display:grid;
+  grid-template-columns:1fr 120px 1fr;
+  grid-template-rows:1fr 75px;
+  column-gap:8px;
+  row-gap:4px;
+  padding:2px;
+  align-items:stretch;
+}
+
+.zonaServicios{
+  grid-column:1 / 4;
+  grid-row:2;
+  display:grid;
+  grid-template-columns:1.7fr 1.6fr 0.6fr 0.6fr 120px 3fr 1.4fr;
+  gap:4px;
+  min-width:600px;
+}
+
+.ladoHotel{
+  grid-row:1;
+}
+
+.centroHotel{
+  grid-column:2;
+  grid-row:1 / 3;
+  height:100%;
+  margin-bottom:0;
+}
+
+.servicio{
+  height:100%;
+  background:#fff3cd;
+  border:3px solid #4e342e;
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:bold;
+  font-size:12px;
+}
+
+.alberca{
+  background:#81d4fa;
+  border-color:#0277bd;
+}
+
+.entradaSuperior{
+  width:100%;
+}
+
+#entradaHotel{
+  position:relative;
+  width:100%;
+  height:220px;
+
+  background-image:url("img/Fachada.png");
+  background-size:cover;
+  background-position:center bottom;
+  background-repeat:no-repeat;
+
+  overflow:hidden;
+  border-radius:12px;
+  border:3px solid #8a5a2b;
+}
+
+.zonaInferiorColumnas{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  align-items:start;
+}
+
+.columnaIzquierdaInferior,
+.columnaDerechaInferior{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.cliente{
+   position:absolute;
+   left:-60px;
+   z-index:80;
+   display:flex;
+   align-items:center;
+   gap:4px;
+}
+
+.clientePasa{
+   animation:
+   moverCliente 5s linear forwards;
+}
+
+.clienteHospeda{
+   animation:
+   entrarHotel 3.5s linear forwards;
+}
+
+.imgCliente{
+  width:96px;
+  height:96px;
+  object-fit:contain;
+
+  animation:pasitosCliente .35s infinite alternate ease-in-out;
+}
+
+.textoCliente{
+  background:rgba(255,255,255,.85);
+  border-radius:6px;
+  padding:1px 5px;
+
+  font-size:12px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.estrellasCliente{
+  font-size:12px;
+}
+
+@keyframes moverCliente{
+
+   from{
+
+      left:-60px;
+
+   }
+
+   to{
+
+      left:110%;
+
+   }
+
+}
+
+@keyframes pasitosCliente{
+  from{
+    transform:translateY(0);
+  }
+
+  to{
+    transform:translateY(-2px);
+  }
+}
+
+@keyframes entrarHotel{
+   0%{
+      left:-60px;
+      opacity:1;
+   }
+   80%{
+      left:44%;
+      opacity:1;
+   }
+   100%{
+      left:47%;
+      opacity:0;
+      transform:scale(.7);
+   }
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-bottom:9px;
+  border:none;
+  border-radius:10px;
+  background:#1976d2;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+}
+
+button:hover{
+  background:#0d47a1;
+}
+
+.itemCatalogo{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:8px;
+  background:#fff8e1;
+  border:2px solid #ffb300;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.iconoCatalogo{
+  font-size:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.itemCatalogo h3,
+.panelEmpleados h3,
+.panelMateriales h3,
+.panelPrestamo h3,
+.panelAgua h3,
+.panelGas h3,
+.panelBasura h3,
+.panelDrenaje h3{
+  margin:0;
+  padding:0;
+  text-align: center;
+}
+
+.itemCatalogo p{
+  margin:3px 0;
+  font-size:13px;
+}
+
+.itemCatalogo button{
+  grid-column:1 / 3;
+  background:#ff9800;
+}
+
+.itemCatalogo button:hover{
+  background:#ef6c00;
+}
+
+#inventario{
+  min-height:500px;
+  background:#f1f8e9;
+  border:2px dashed #7cb342;
+  border-radius:12px;
+  padding:10px;
+}
+
+.itemInventario{
+  display:inline-block;
+  background:white;
+  border:2px solid #388e3c;
+  border-radius:10px;
+  padding:8px;
+  margin:5px;
+  cursor:grab;
+  font-size:22px;
+}
+
+.itemInventario small{
+  display:block;
+  font-size:10px;
+  text-align:center;
+}
+
+.ayuda{
+  font-size:13px;
+  color:#555;
+}
+
+#detalleCuarto{
+  background:#f5f5f5;
+  border-radius:10px;
+  padding:10px;
+  line-height:1.6;
+}
+
+#mensajes{
+  background:#111;
+  color:#00ff7f;
+  height:260px;
+  overflow-y:auto;
+  border-radius:12px;
+  padding:12px;
+  font-family:monospace;
+}
+
+.mensaje{
+  margin-bottom:7px;
+}
+
+@media(max-width:1100px){
+  .principal{
+    grid-template-columns:1fr;
+  }
+
+  .inventarioLateral{
+    position:static;
+  }
+
+  #inventario{
+    min-height:150px;
+  }
+
+  .panel{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .hotelVisual{
+    grid-template-columns:1fr;
+  }
+
+  .centroHotel{
+    min-height:140px;
+  }
+
+  .ladoHotel{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+.cabinaElevador{
+  width:80px;
+  height:110px;
+  background:#b0bec5;
+  border:4px solid #546e7a;
+  border-radius:8px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:45px;
+  animation:moverCabina 10s ease-in-out infinite;
+}
+
+@keyframes moverCabina{
+
+  0%{
+    transform:translateY(00px);
+  }
+  5%{
+    transform:translateY(-40px);
+  }
+  10%{
+    transform:translateY(-110px);
+  }
+  15%{
+    transform:translateY(-190px);
+  }
+  20%{
+    transform:translateY(-270px);
+  }
+  25%{
+    transform:translateY(-350px);
+  }
+  30%{
+    transform:translateY(-430px);
+  }
+  35%{
+    transform:translateY(-510px);
+  }
+  40%{
+    transform:translateY(-590px);
+  }
+  45%{
+    transform:translateY(-670px);
+  }
+  50%{
+    transform:translateY(-740px);
+  }
+  55%{
+    transform:translateY(-670px);
+  }
+  60%{
+    transform:translateY(-590px);
+  }
+  65%{
+    transform:translateY(-510px);
+  }
+  70%{
+    transform:translateY(-430px);
+  }
+  75%{
+    transform:translateY(-350px);
+  }
+  80%{
+    transform:translateY(-270px);
+  }
+  85%{
+    transform:translateY(-190px);
+  }
+  90%{
+    transform:translateY(-110px);
+  }
+  95%{
+    transform:translateY(-30px);
+  }
+  100%{
+    transform:translateY(00px);
+  }
+}
+
+.centroHotel .letreroElevador,
+.centroHotel .elevador{
+  visibility:hidden;
+}
+
+.centroHotel.elevadorComprado .letreroElevador,
+.centroHotel.elevadorComprado .elevador{
+  visibility:visible;
+}
+
+.zonaInferior{
+  display:flex;
+  flex-direction:column;
+  gap: 4px;
+  width:100%;
+  margin-top:4px;
+}
+
+.mantenimientoPanel{
+  background:#f5f5f5;
+  border-radius:12px;
+  padding:5px;
+  border:3px solid #9e9e9e;
+  min-height:190px;
+}
+
+#indicadoresMantenimiento p{
+  margin:5px 0;
+  font-weight:bold;
+}
+
+.indicador{
+  margin-bottom:5px;
+}
+
+.barraExterior{
+  width:100%;
+  height:18px;
+  background:#d7ccc8;
+  border-radius:10px;
+  overflow:hidden;
+  border:2px solid #8d6e63;
+}
+
+.barraInterior{
+  height:100%;
+
+  background:linear-gradient(
+    to right,
+    #43a047,
+    #c0ca33,
+    #e53935
+  );
+
+  border-radius:8px;
+}
+
+.indicadorTitulo{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:5px;
+  margin-bottom:6px;
+}
+
+.tituloIzquierda{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:bold;
+}
+
+.zonaDerechaIndicador{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.btnReparar{
+  width:auto;
+  padding:5px 10px;
+  margin:0;
+  font-size:12px;
+  border-radius:8px;
+  background:#43a047;
+}
+
+.btnReparar:hover{
+  background:#2e7d32;
+}
+
+.costoReparacion{
+  margin-top:5px;
+  font-weight:bold;
+  color:#2e7d32;
+}
+
+.panelEmpleados{
+  margin-top:12px;
+  background:white;
+  border:3px solid #444;
+  border-radius:12px;
+  padding:10px;
+}
+
+.tablaEmpleados{
+  width:100%;
+}
+
+.filaEmpleado{
+  display:grid;
+  grid-template-columns:
+1.5fr
+0.8fr
+0.9fr
+1fr
+1fr
+1fr
+40px
+40px;
+  align-items:center;
+  gap:5px;
+  padding:6px;
+  border-bottom:1px solid #ddd;
+  font-size:16px;
+}
+
+.encabezadoEmpleado{
+  font-weight:bold;
+  background:#ececec;
+  border-radius:6px;
+}
+
+.totalFila{
+  background:#dcedc8;
+  font-weight:bold;
+  border-top:3px solid #558b2f;
+}
+
+.panelMateriales{
+  margin-top:12px;
+  background:white;
+  border:3px solid #444;
+  border-radius:12px;
+  padding:10px;
+}
+
+.filaMaterial{
+  display:grid;
+  grid-template-columns:
+1.5fr
+0.8fr
+0.8fr
+0.8fr
+0.9fr
+1fr
+0.8fr;
+  gap:6px;
+  align-items:center;
+  padding:6px;
+  border-bottom:1px solid #ddd;
+  font-size:16px;
+}
+
+.encabezadoMaterial{
+  background:#ececec;
+  font-weight:bold;
+  border-radius:6px;
+}
+
+.barraMaterial{
+  width:100%;
+  height:18px;
+  background:#ddd;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.barraInternaMaterial{
+  height:100%;
+  background:#5ea600;
+}
+
+.totalMateriales{
+  background:#dcedc8;
+  font-weight:bold;
+  border-top:3px solid #558b2f;
+}
+
+.textoBarraMaterial{
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+}
+
+.barraSuperior{
+  display:flex;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:white;
+  padding:10px;
+  border-bottom:3px solid #444;
+}
+
+.encabezadoJuego{
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:#f5f5f5;
+}
+
+.encabezadoFijo{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #f5f5f5;
+  padding-bottom: 1px;
+}
+
+header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #f5f5f5;
+  padding: 4px;
+}
+
+header h1{
+  margin: 0;
+  font-size: 24px;
+}
+
+header p{
+  margin: 2px 0 0 0;
+  font-size: 12px;
+}
+
+.panel{
+  position: sticky;
+  top: 90px;
+  z-index: 999;
+  background: white;
+  border-bottom: 3px solid #444;
+  padding: 2px;
+  margin-bottom: 0;
+}
+
+.footerAutor{
+  text-align:center;
+  margin-top:20px;
+  padding:10px;
+  font-size:30px;
+  color:#666;
+}
+
+
+.panelPrestamo{
+  margin-top:15px;
+  background:#e8f1ff;
+  border:3px solid #1976d2;
+  border-radius:12px;
+  padding:12px;
+}
+
+.panelPrestamo h3{
+  margin-top:0;
+  text-align:center;
+}
+
+.datoPrestamo{
+  margin:8px 0;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.gameOverOverlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.gameOverBox{
+  background:#222;
+  color:white;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  width:400px;
+  border:5px solid red;
+  box-shadow:0 0 40px red;
+ animation: aparecerGameOver 0.5s ease;
+}
+
+.gameOverBox h1{
+  color:#ff4d4d;
+  font-size:36px;
+  margin-bottom:20px;
+}
+
+.gameOverBox p{
+  font-size:18px;
+  margin:10px 0;
+}
+
+.gameOverBox button{
+  margin-top:20px;
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  background:#ff4d4d;
+  color:white;
+  cursor:pointer;
+}
+
+.gameOverBox button:hover{
+
+  background:#ff1a1a;
+
+}
+
+@keyframes aparecerGameOver{
+
+  from{
+    transform:scale(0.7);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.ventaUsadosBox{
+  margin-top:15px;
+  background:white;
+  border:3px dashed #2e7d32;
+  border-radius:12px;
+  padding:10px;
+}
+
+#zonaVentaUsados{
+  min-height:80px;
+  background:#e8f5e9;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.filaDetalleObjeto button{
+  padding:2px 6px;
+  font-size:11px;
+  border:none;
+  border-radius:6px;
+  background:#d9534f;
+  color:white;
+  cursor:pointer;
+  margin-left:5px;
+}
+
+.filaDetalleObjeto button:hover{
+  background:#b52b27;
+}
+
+.filaDetalleObjeto{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:4px 0;
+}
+
+.filtrosCatalogo{
+  display:flex;
+  flex-wrap:wrap;
+  gap:2px;
+  margin-bottom:10px;
+  justify-content:center;
+}
+
+.filtrosCatalogo button{
+  width:36px;
+  height:36px;
+  border:1px solid #000;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:18px;
+  background:#ececec;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+}
+
+.filtrosCatalogo button:hover{
+  background:#d4d4d4;
+}
+
+.filtrosCatalogo{
+  display:flex;
+  flex-wrap:wrap;
+  gap:3px;
+  margin-bottom:10px;
+}
+
+.filtrosCatalogo button{
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:18px;
+  background:#ececec;
+}
+
+.filtrosCatalogo button:hover{
+
+  background:#d4d4d4;
+
+}
+
+.alberca{
+  background:#81d4fa;
+  border-color:#0277bd;
+}
+
+.hotelBox{
+  background:white;
+  border-radius:18px;
+  padding:2px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  margin-bottom:5px;
+}
+
+.hotelVisual{
+  min-width:600px;
+}
+
+.bandaMensajes{
+  position:sticky;
+  top:110px; /* ajusta según la altura de tu encabezado */
+  z-index:999;
+  background:#111;
+  color:#00ff7f;
+  font-family:monospace;
+  font-weight:bold;
+  padding:2px;
+  overflow:hidden;
+  white-space:nowrap;
+  border-top:2px solid #333;
+  border-bottom:2px solid #333;
+}
+
+#textoBanda{
+  display:inline-block;
+  animation:moverBanda 32s linear infinite;
+}
+
+@keyframes moverBanda{
+  from{
+    transform:translateX(100vw);
+  }
+  to{
+    transform:translateX(-200vw);
+  }
+}
+
+.usuarioActual{
+  position:absolute;
+  left:15px;
+  top:10px;
+  font-size:14px;
+  font-weight:bold;
+  color:#2c3e50;
+}
+
+.modalRanking{
+  display:none;
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+}
+
+.contenidoRanking{
+  background:white;
+  width:700px;
+  max-width:95%;
+  margin:50px auto;
+  padding:20px;
+  border-radius:10px;
+}
+
+#tablaRanking{
+  width:100%;
+  border-collapse:collapse;
+}
+
+#tablaRanking th,
+#tablaRanking td{
+  border:1px solid #ccc;
+  padding:8px;
+  text-align:center;
+}
+
+#tablaRanking th{
+  background:#f2f2f2;
+}
+
+.advertencias{
+   font-size:14px;
+   text-align: center;
+   padding:px;
+}
+
+.modalInstrucciones{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.75);
+  z-index:99999;
+}
+
+.contenidoInstruccionesImagen{
+  width:90%;
+  max-width:1000px;
+  margin:30px auto;
+  text-align:center;
+}
+
+.contenidoInstruccionesImagen img{
+  width:100%;
+  max-height:85vh;
+  object-fit:contain;
+  border-radius:15px;
+  box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+.contenidoInstruccionesImagen button{
+  margin-top:10px;
+  max-width:350px;
+}
+
+.panelResultados{
+  margin-top:10px;
+  background:#fffde7;
+  border:3px solid #f9a825;
+  border-radius:12px;
+  padding:4px;
+}
+
+.filaResultado{
+  display:grid;
+  grid-template-columns:0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.7fr;
+  gap:4px;
+  font-size:14px;
+  border-bottom:1px solid #ddd;
+  padding:4px 0;
+}
+
+.encabezadoResultado{
+  font-weight:bold;
+  background:#fff8c4;
+}
+
+.resultadoNegativo{
+  color:red;
+  font-weight:bold;
+}
+
+.resultadoPositivo{
+  color:green;
+  font-weight:bold;
+}
+
+.btnDetalleEnergia{
+  position:absolute;
+  left:3px;
+  top:3px;
+  width:15px;
+  height:15px;
+  padding:0;
+  font-size:10px;
+  border-radius:50%;
+  border:1px solid #999;
+  background:#fff;
+  cursor:pointer;
+  z-index:5;
+}
+.btnDetalleEnergia:hover{
+  background:#ffe082;
+}
+
+.torretasEnergia{
+  font-size:14px;
+  min-height:16px;
+  animation: parpadeoTorretas 0.6s infinite alternate;
+}
+
+.alertaParpadeo{
+  animation: parpadeoTorretas 0.6s infinite alternate;
+}
+
+@keyframes parpadeoTorretas{
+  from{ opacity:0.25; }
+  to{ opacity:1; }
+}
+
+.btnDetalleEnergia{
+  font-size:7px;
+  padding:2px 5px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.modalEnergia{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:99999;
+}
+
+.contenidoEnergia{
+  background:white;
+  width:650px;
+  max-width:92%;
+  margin:70px auto;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.tablaEnergia{
+  width:100%;
+  border-collapse:collapse;
+  margin:15px 0;
+}
+
+.tablaEnergia th,
+.tablaEnergia td{
+  border:1px solid #ccc;
+  padding:7px;
+  font-size:13px;
+}
+
+.tablaEnergia th{
+  background:#fff3cd;
+}
+
+.plantaLuz{
+  position:relative;
+  width:100%;
+  height:100%;
+  background:
+  linear-gradient(
+    to bottom,
+    #f8f7f4 0%,
+    #c4c4c1 70%,
+    #9b9997 70%,
+    #5e5d5d 100%
+  );
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:2px;
+  text-align:center;
+  box-sizing:border-box;
+}
+
+.btnDetalleEnergia{
+  position:absolute;
+  left:2px;
+  top:2px;
+  width:14px;
+  height:14px;
+  padding:0;
+  font-size:9px;
+  line-height:12px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+}
+
+.tituloPlantaLuz{
+  width:100%;
+  text-align:center;
+  font-size:13px;
+  font-weight:bold;
+  margin-top:2px;
+}
+
+.datosPlantaLuz{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  font-size:10px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.iconoPlantaLuz{
+  width:16px;
+  height:16px;
+  vertical-align:middle;
+}
+
+.torretasEnergia{
+  min-height:14px;
+  font-size:13px;
+  line-height:13px;
+}
+
+.energiaPanel{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  font-weight:bold;
+}
+
+.iconoBateria{
+  font-size:20px;
+  line-height:20px;
+}
+
+#energiaUsada,
+#energiaCapacidad{
+  font-size:13px;
+}
+
+.lavanderia{
+  width:100%;
+  height:100%;
+  background:
+  linear-gradient(
+    to bottom,
+    #f8f7f4 0%,
+    #ebf7f4 70%,
+    #bfe6df 70%,
+    #0e97e7 100%
+  );
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  padding:4px;
+  box-sizing:border-box;
+}
+
+.tituloLavanderia{
+  width:100%;
+  text-align:center;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.filaCentralLavanderia{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.iconoLavadora{
+  width:24px;
+  height:24px;
+}
+
+.filaPendientes{
+  width:100%;
+  text-align:center;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.iconoFiltro{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+}
+
+.iconoCatalogoImg{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+}
+
+.alberca{
+    width:255px;
+    height:80px;
+    background-image:url("img/Alberca.png");
+    background-size:95% 85%;
+    background-repeat:no-repeat;
+    background-position:center;
+    border-radius:10px;
+    border:4px solid #2149ce;
+}
+
+.cafeteria{
+    width:560px;
+    height:80px;
+    background-image:url("img/Cafeteria.png");
+    background-size:98% 88%;
+    background-repeat:no-repeat;
+    background-position:center;
+    border-radius:10px;
+    border:2px solid #703005;
+}
+
+
+.recepcion{
+    width:330px;
+    height:80px;
+    background-image:url("img/Recepcion.png");
+    background-size:98% 88%;
+    background-repeat:no-repeat;
+    background-position:center;
+    border-radius:10px;
+    border:2px solid #703005;
+}
+
+
+.mantenimiento{
+    width:145px;
+    height:80px;
+    background-image:url("img/Mantenimiento.png");
+    background-size:98% 88%;
+    background-repeat:no-repeat;
+    background-position:center;
+    border-radius:10px;
+    border:2px solid #703005;
+}
+
+.oculto{
+  display:none !important;
+}
+
+.alertaEvento{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ventanaEvento{
+  width:460px;
+  max-width:90%;
+  background:#fff7e6;
+  border:5px solid #b71c1c;
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 0 35px rgba(0,0,0,.6);
+}
+
+.ventanaEvento h2{
+  margin:0 0 10px 0;
+  color:#b71c1c;
+  font-size:26px;
+}
+
+.imagenEvento{
+  width:100%;
+  max-height:220px;
+  object-fit:cover;
+  border-radius:12px;
+  border:3px solid #333;
+  margin-bottom:10px;
+}
+
+.ventanaEvento p{
+  font-size:17px;
+  font-weight:bold;
+  line-height:1.5;
+}
+
+.ventanaEvento button{
+  background:#2e7d32;
+  font-size:16px;
+}
+
+.btnCambiarVista{
+  width:auto;
+  padding:8px 14px;
+  margin:5px auto 10px auto;
+  display:block;
+  border-radius:10px;
+  background:#2905f1;
+  color:white;
+  font-weight:bold;
+}
+.contenedorHexagonos{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:10px;
+  justify-items:center;
+}
+
+.hexMantenimiento{
+  width:170px;
+  height:190px;
+  position:relative;
+
+  clip-path:polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+
+  background:#08ee4d;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hexMantenimiento::before{
+  content:"";
+  position:absolute;
+  inset:15px;
+
+  clip-path:polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+
+  background:rgb(252, 251, 251);
+  border:4px solid rgb(253, 251, 251);
+}
+
+.contenidoHex{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  font-weight:bold;
+  color:black;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+}
+
+.nombreHex{
+  font-size:20px;
+  font-style:italic;
+  line-height: 1;
+}
+
+.porcentajeHex{
+  font-size:16px;
+  line-height: 1;
+  margin:0;
+}
+
+.costoHex{
+  font-size:16px;
+  font-style:italic;
+  color: #b52b27;
+  line-height: 1;
+  cursor:pointer;
+}
+
+.hexVerde{
+  background:#09f750;
+}
+
+.hexAmarillo{
+  background:#c4ee0a;
+}
+
+.hexNaranja{
+  background:#eef104;
+}
+
+.hexRojo{
+  background:#e90909;
+}
+
+.btnHex{
+  width:96px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  border-radius:8px;
+  background:#1976d2;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.panelAguaGas{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+    margin-top:12px;
+    background:white;
+    border:3px solid #444;
+    border-radius:12px;
+    padding:15px;
+}
+.panelAgua{
+    width:50%;
+}
+
+.panelGas{
+    width:50%;
+    border-left:3px solid #bbb;
+    padding-left:20px;
+}
+
+.aguaContenido{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:25px;
+}
+
+.tanqueAgua{
+  width:130px;
+  height:150px;
+  border:4px solid #111;
+  border-radius:50% / 12%;
+  position:relative;
+  overflow:hidden;
+  background:white;
+}
+
+.tanqueAgua::before{
+  content:"";
+  position:absolute;
+  top:-4px;
+  left:-4px;
+  width:130px;
+  height:28px;
+  border:4px solid #111;
+  border-radius:50%;
+  background:white;
+  z-index:3;
+}
+
+.nivelAgua{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#00a9e8;
+  transition:.4s;
+}
+
+.datosAgua{
+  font-size:15px;
+  font-weight:bold;
+}
+
+.datosAgua button{
+  background:#03a9f4;
+  border-radius:14px;
+  padding:10px;
+}
+
+.nivelGas{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#FFD500;
+    transition:.5s;
+}
+
+.gasContenido{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:25px;
+}
+
+.datosGas{
+    font-size:15px;
+    font-weight:bold;
+}
+
+.datosGas button{
+    background:#FFD500;
+    color:#000;
+    border:3px solid #111;
+    border-radius:14px;
+    padding:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.datosGas button:hover{
+    background:#FFC400;
+}
+
+.tanqueGas{
+    width:180px;
+    height:100px;
+    border:5px solid #111;
+    border-radius:50px;
+    position:relative;
+    overflow:hidden;
+    background:white;
+}
+
+.tanqueGas::before{
+    content:"";
+    position:absolute;
+    left:-5px;
+    top:-5px;
+    width:180px;
+    height:25px;
+    border:5px solid #111;
+    border-radius:50%;
+    background:white;
+    z-index:3;
+}
+
+.fantasmaHotel{
+  position:absolute;
+  left:-80px;
+  top:120px;
+  width:70px;
+  height:70px;
+  object-fit:contain;
+  z-index:9999;
+  pointer-events:none;
+  opacity:.85;
+  animation:fantasmaRecorre 8s linear forwards;
+}
+
+@keyframes fantasmaRecorre{
+  0%{ left:-80px; top:320px; }
+  25%{ top:820px; }
+  50%{ top:540px; }
+  75%{ top:820px; }
+  100%{ left:105%; top:320px; }
+}
+
+.panelBasuraDrenaje {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.panelBasura,
+.panelDrenaje {
+  flex: 1;
+  background: #f8f8f8;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.barraBasura,
+.barraDrenaje {
+  width: 100%;
+  height: 22px;
+  background: #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.nivelBasura {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #7a7a7a, #2f2f2f);
+}
+
+.nivelDrenaje {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #8b5a2b, #3b1f0f);
+}
+
+.panelBasuraDrenaje button {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.panelBasuraDrenaje button:hover {
+  background: #084298;
+}
+
+.textoConsumo{
+    margin-top:2px;
+    font-size:16px;
+    color:#666;
+    text-align:center;
+    line-height:1.3;
+    font-style:italic;
+    padding: 0;
+}
+
+.itemSeleccionadoMovil {
+  outline: 3px solid #00aaff;
+  background: #e6f7ff;
+  transform: scale(1.05);
+}
