@@ -1347,6 +1347,11 @@ ocupacionSpan.textContent = `${ocupadas}/${compradas}`;
   actualizarPanelGas();
   actualizarPanelBasuraDrenaje();
   verificarQuiebra();
+
+  if (window.innerWidth <= 900) {
+  mostrarSeccionMovil("hotel");
+}
+
 }
 
 function iconoClima(clima) {
@@ -1726,7 +1731,24 @@ function soltarItemSeleccionadoEnCuarto(cuartoId) {
 }
 
 function mostrarSeccionMovil(seccion) {
-  agregarMensaje(`📱 Sección móvil: ${seccion}`);
+  if (window.innerWidth > 900) return;
+
+  const bloques = {
+    hotel: document.querySelector(".hotelVisual") || document.getElementById("hotel"),
+    inventario: document.getElementById("inventario")?.closest("section") || document.getElementById("inventario"),
+    catalogo: document.getElementById("catalogo")?.closest("section") || document.getElementById("catalogo"),
+    empleados: document.getElementById("contenidoEmpleados")?.closest("section"),
+    finanzas: document.getElementById("historialResultados")?.closest("section")
+  };
+
+  Object.values(bloques).forEach((bloque) => {
+    if (bloque) bloque.style.display = "none";
+  });
+
+  if (bloques[seccion]) {
+    bloques[seccion].style.display = "block";
+    bloques[seccion].scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 function generarContenidoCuarto(cuarto) {
