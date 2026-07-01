@@ -1725,6 +1725,10 @@ function soltarItemSeleccionadoEnCuarto(cuartoId) {
   actualizarPantalla();
 }
 
+function mostrarSeccionMovil(seccion) {
+  agregarMensaje(`📱 Sección móvil: ${seccion}`);
+}
+
 function generarContenidoCuarto(cuarto) {
   let html = `
     <span class="numeroCuarto">
