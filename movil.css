@@ -723,3 +723,92 @@
   }
 
 }
+
+@media (max-width:900px){
+
+  .columnaCentroPC{
+    display:block !important;
+    margin:0 !important;
+    padding:0 !important;
+    gap:0 !important;
+    min-height:0 !important;
+  }
+
+  .columnaCentroPC{
+    margin-top:0 !important;
+  }
+
+  #panelHotel{
+    margin-top:2px !important;
+  }
+
+}
+
+@media (max-width:900px){
+
+  .barraMovilTarjetas{
+    bottom:18px !important;
+    height:88px !important;
+  }
+
+  body{
+    padding-bottom:130px !important;
+  }
+
+}
+
+@media (max-width:900px){
+
+  #hotelMovil{
+    display:block !important;
+    width:100% !important;
+    margin-top:0 !important;
+    padding-top:0 !important;
+  }
+
+  .filaPisoMovil{
+    display:flex !important;
+    align-items:stretch !important;
+    width:100% !important;
+    margin-bottom:8px !important;
+    background:#f4f4f4 !important;
+    border:2px solid #ccc !important;
+    border-radius:10px !important;
+    overflow:hidden !important;
+  }
+
+  .elevadorMovil{
+    width:55px !important;
+    min-width:55px !important;
+    background:#333 !important;
+    color:white !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    font-size:24px !important;
+  }
+
+  .cuartosScrollMovil{
+    display:flex !important;
+    flex:1 !important;
+    gap:6px !important;
+    overflow-x:auto !important;
+    padding:6px !important;
+  }
+
+  .cuartoMovil,
+  .servicioMovil{
+    min-width:90px !important;
+    height:86px !important;
+    flex:0 0 90px !important;
+  }
+}
+
+@media (max-width:900px){
+
+  #hotelMovil,
+  #zonaPanelMovil{
+    display:block !important;
+  }
+
+}
