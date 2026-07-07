@@ -1334,7 +1334,9 @@ function actualizarPantalla() {
   valorHotelSpan.textContent = valorHotel().toLocaleString();
 
   dibujarHotel();
+  guardarScrollHotelMovil();
   dibujarHotelMovil();
+  restaurarScrollHotelMovil();
   dibujarInventario();
   mostrarDetalleCuarto();
   actualizarIndicadoresMantenimiento();
@@ -1347,6 +1349,7 @@ function actualizarPantalla() {
   actualizarPanelAgua();
   actualizarPanelGas();
   actualizarPanelBasuraDrenaje();
+  actualizarPanelClima();
   verificarQuiebra();
 
   if (window.innerWidth <= 900 && !window.seccionMovilActual) {
@@ -1611,6 +1614,52 @@ function claseHex(vida) {
   return "hexRojo";
 }
 
+let scrollHotelMovil = {
+  habitaciones: 0,
+  servicios: 0,
+  vertical: 0
+};
+
+function guardarScrollHotelMovil() {
+  if (window.innerWidth > 900) return;
+
+  const filas = document.querySelectorAll(".cuartosScrollMovil");
+
+  if (filas[0]) {
+    scrollHotelMovil.habitaciones = filas[0].scrollLeft;
+  }
+
+  if (filas[1]) {
+    scrollHotelMovil.servicios = filas[1].scrollLeft;
+  }
+
+  const hotelMovil = document.getElementById("hotelMovil");
+  if (hotelMovil) {
+    scrollHotelMovil.vertical = hotelMovil.scrollTop;
+  }
+}
+
+function restaurarScrollHotelMovil() {
+  if (window.innerWidth > 900) return;
+
+  requestAnimationFrame(() => {
+    const filas = document.querySelectorAll(".cuartosScrollMovil");
+
+    if (filas[0]) {
+      filas[0].scrollLeft = scrollHotelMovil.habitaciones;
+    }
+
+    if (filas[1]) {
+      filas[1].scrollLeft = scrollHotelMovil.servicios;
+    }
+
+    const hotelMovil = document.getElementById("hotelMovil");
+    if (hotelMovil) {
+      hotelMovil.scrollTop = scrollHotelMovil.vertical;
+    }
+  });
+}
+
 function dibujarHotel() {
   ladoIzquierdo.innerHTML = "";
   ladoDerecho.innerHTML = "";
@@ -1644,11 +1693,13 @@ function dibujarHotel() {
 
 function dibujarHotelMovil() {
   const contenedor = document.getElementById("hotelMovil");
+
   if (!contenedor) return;
 
   contenedor.innerHTML = "";
 
   const pisos = [...new Set(cuartos.map((c) => Math.floor(c.numero / 100)))];
+
   pisos.sort((a, b) => b - a);
 
   pisos.forEach((piso) => {
@@ -1664,21 +1715,11 @@ function dibujarHotelMovil() {
 
     cuartosDelPiso.forEach((cuarto) => {
       html += `
-        <div 
-          class="cuartoMovil ${cuarto.comprada ? "comprado" : "bloqueado"}"
+        <div
+          class="cuarto cuartoMovil ${cuarto.comprada ? "comprado" : "bloqueado"} ${cuarto.ocupada ? "ocupado" : ""}"
           onclick="tocarCuartoMovil(${cuarto.id})"
         >
-          <span class="numeroCuartoMovil">
-            ${cuarto.comprada ? cuarto.numero : "🔒"}
-          </span>
-
-          <div class="iconosCuartoMovil">
-            ${cuarto.comprada ? generarIconosCuartoMovil(cuarto) : ""}
-          </div>
-
-          <span class="precioCuartoMovil">
-            ${cuarto.comprada ? "$" + precioCuarto(cuarto) : ""}
-          </span>
+          ${cuarto.comprada ? generarContenidoCuarto(cuarto) : "🔒"}
         </div>
       `;
     });
@@ -1735,7 +1776,7 @@ function dibujarHotelMovil() {
 function generarIconosCuartoMovil(cuarto) {
   let iconos = "";
 
-  if (cuarto.ocupada) iconos += "🛌 ";
+  if (cuarto.ocupada) iconos += "🔴";
   if (cuarto.objetos.cama) iconos += "🛏️ ";
   if (cuarto.objetos.tv) iconos += "📺 ";
   if (cuarto.objetos.lampara) iconos += "💡 ";
@@ -1894,6 +1935,9 @@ function soltarItemSeleccionadoEnCuarto(cuartoId) {
 function mostrarSeccionMovil(panel, boton = null) {
   if (window.innerWidth > 900) return;
 
+  // Primero guardamos dónde estaba viendo el usuario
+  guardarScrollHotelMovil();
+
   window.seccionMovilActual = panel;
 
   const panelesSecundarios = [
@@ -1910,12 +1954,14 @@ function mostrarSeccionMovil(panel, boton = null) {
     "panelIndicadores",
     "panelFinanzas",
     "panelPrestamo",
+    "panelClima",
     "panelControles",
-    "panelMovimiento",
+    "panelMovimiento"
   ];
 
   panelesSecundarios.forEach((id) => {
     const el = document.getElementById(id);
+
     if (el) {
       el.classList.remove("panelMovilActivo");
       el.style.display = "none";
@@ -1937,8 +1983,9 @@ function mostrarSeccionMovil(panel, boton = null) {
     indicadores: "panelIndicadores",
     finanzas: "panelFinanzas",
     prestamo: "panelPrestamo",
+    clima:"panelClima",
     controles: "panelControles",
-    movimiento: "panelMovimiento",
+    movimiento: "panelMovimiento"
   };
 
   const idMostrar = mapa[panel];
@@ -1958,7 +2005,11 @@ function mostrarSeccionMovil(panel, boton = null) {
     t.classList.remove("activa");
   });
 
-  if (boton) boton.classList.add("activa");
+  if (boton) {
+    boton.classList.add("activa");
+  }
+  // Restauramos después de que el navegador acomode el panel
+  restaurarScrollHotelMovil();
 }
 
 function generarContenidoCuarto(cuarto) {
@@ -1973,7 +2024,7 @@ function generarContenidoCuarto(cuarto) {
   if (cuarto.ocupada) {
     html += `
       <span class="estadoCuarto">
-        🛌
+        🔴
       </span>
     `;
   } else if (cuartoListo(cuarto)) {
@@ -1985,7 +2036,7 @@ function generarContenidoCuarto(cuarto) {
   } else {
     html += `
       <span class="estadoCuarto">
-        ⚠️
+        🟡
       </span>
     `;
   }
@@ -2937,7 +2988,7 @@ function mostrarDetalleCuarto() {
     <br>
 
     Listo para rentar:
-    ${cuartoListo(cuarto) ? "✅ Sí" : "⚠️ No"}
+    ${cuartoListo(cuarto) ? "✅ Sí" : "🟡 No"}
     <br>
 
     ⭐ Lujo:
@@ -3210,6 +3261,71 @@ function avanzarHora() {
   actualizarPantalla();
 }
 
+function actualizarPanelClima() {
+  const clima = obtenerClimaDelDia();
+
+  let estado = 0;
+  let temperatura = 0;
+  let viento = 0;
+  let humedad = 0;
+  let lluvia = 0;
+
+  if (clima.estado === "Soleado") estado = 20;
+  if (clima.estado === "Parcialmente nublado") estado = 10;
+  if (clima.estado === "Nublado") estado = -10;
+  if (clima.estado === "Lluvioso") estado = -35;
+
+  if (clima.maxima >= 35) temperatura -= 10;
+  if (clima.maxima >= 38) temperatura -= 20;
+  if (clima.minima <= 5) temperatura -= 10;
+  if (clima.minima <= 0) temperatura -= 20;
+  if (clima.minima > 5 && clima.maxima < 35) temperatura += 5;
+
+  if (clima.viento >= 30) viento = -15;
+  else if (clima.viento >= 20) viento = -5;
+
+  if (clima.humedad >= 80) humedad = -10;
+  else if (clima.humedad <= 20) humedad = -5;
+
+  if (clima.lluvia) lluvia = -10;
+
+  const total = estado + temperatura + viento + humedad + lluvia;
+
+  document.getElementById("estadoClima").textContent = clima.estado;
+  document.getElementById("tempMin").textContent = clima.minima;
+  document.getElementById("tempMax").textContent = clima.maxima;
+  document.getElementById("vientoClima").textContent = clima.viento;
+  document.getElementById("humedadClima").textContent = clima.humedad;
+  document.getElementById("lluviaClima").textContent = clima.lluvia ? "Sí" : "No";
+
+  document.getElementById("demandaEstado").textContent =
+    `☀️ Estado: ${estado > 0 ? "+" : ""}${estado}%`;
+
+  document.getElementById("demandaTemperatura").textContent =
+    `🌡️ Temperatura: ${temperatura > 0 ? "+" : ""}${temperatura}%`;
+
+  document.getElementById("demandaViento").textContent =
+    `🌬️ Viento: ${viento > 0 ? "+" : ""}${viento}%`;
+
+  document.getElementById("demandaHumedad").textContent =
+    `💧 Humedad: ${humedad > 0 ? "+" : ""}${humedad}%`;
+
+  document.getElementById("demandaLluvia").textContent =
+    `🌧️ Lluvia: ${lluvia > 0 ? "+" : ""}${lluvia}%`;
+
+  document.getElementById("demandaTotal").textContent =
+    `${total > 0 ? "+" : ""}${total}%`;
+
+  document.getElementById("demanda").textContent =
+    `${total > 0 ? "+" : ""}${total}%`;
+
+  document.getElementById("mensajeClima").textContent =
+    total >= 20 ? "Excelente día para recibir huéspedes." :
+    total >= 0 ? "Día normal para el hotel." :
+    total >= -25 ? "La demanda puede bajar un poco." :
+    "Mal clima: llegarán menos huéspedes.";
+}
+
 function reproducirGrillo() {
   const sonido = document.getElementById("sonidoGrillo");
   sonido.play();
@@ -3443,13 +3559,80 @@ function obtenerClimaDelDia() {
 }
 
 function calcularClientes() {
-  const pisos = Math.max(...cuartos.map((c) => Math.floor(c.numero / 100)));
+
+  const pisos = Math.max(...cuartos.map(c => Math.floor(c.numero / 100)));
 
   const clientesPorPiso = 20;
+  let clientesDia = pisos * clientesPorPiso;
 
-  const clientesDia = pisos * clientesPorPiso;
+  const clima = obtenerClimaDelDia();
 
-  return Math.round(clientesDia / 16);
+  // ===== ESTADO DEL CLIMA =====
+
+  switch (clima.estado) {
+
+    case "Soleado":
+      clientesDia *= 1.20;
+      break;
+
+    case "Parcialmente nublado":
+      clientesDia *= 1.10;
+      break;
+
+    case "Nublado":
+      clientesDia *= 0.90;
+      break;
+
+    case "Lluvioso":
+      clientesDia *= 0.65;
+      break;
+  }
+
+  // ===== LLUVIA =====
+
+  if (clima.lluvia) {
+    clientesDia *= 0.90;
+  }
+
+  // ===== TEMPERATURA =====
+
+  if (clima.maxima >= 35) {
+    clientesDia *= 0.90;
+  }
+
+  if (clima.maxima >= 38) {
+    clientesDia *= 0.80;
+  }
+
+  if (clima.minima <= 0) {
+    clientesDia *= 0.80;
+  }
+
+  if (clima.minima <= 5) {
+    clientesDia *= 0.90;
+  }
+
+  // ===== VIENTO =====
+
+  if (clima.viento >= 20) {
+    clientesDia *= 0.95;
+  }
+
+  if (clima.viento >= 30) {
+    clientesDia *= 0.85;
+  }
+
+  // ===== HUMEDAD =====
+
+  if (clima.humedad >= 80) {
+    clientesDia *= 0.90;
+  }
+
+  if (clima.humedad <= 20) {
+    clientesDia *= 0.95;
+  }
+
+  return Math.max(1, Math.round(clientesDia / 16));
 }
 
 function sonarAmbulancia() {
